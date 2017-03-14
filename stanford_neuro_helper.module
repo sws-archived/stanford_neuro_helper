@@ -1,0 +1,14 @@
+<?php
+
+/**
+* Implements hook_views_api().
+*
+* Enabling using templates inside module
+*/
+function stanford_neuro_helper_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'NAME'),
+    'template path' => drupal_get_path('module', 'stanford_neuro_helper') . '/templates',
+  );
+}
