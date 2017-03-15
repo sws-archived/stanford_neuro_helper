@@ -77,7 +77,7 @@ switch ($row->node_type) {
   case 'stanford_announcement':
     if ($row->field_field_s_announce_tweet[0]['raw']['value'] == 1) {
       //This is a tweet
-      $output = '<div class="masonry-tweet">';
+      $output = '<div class="masonry-tweet well">';
       $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
       if ($node_acces) {
         $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
