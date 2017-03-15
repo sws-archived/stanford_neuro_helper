@@ -29,7 +29,7 @@ if (node_access("update", $node, $user) === TRUE) {
   $node_acces = TRUE;
 }
 else {
-  $node_acces = False;
+  $node_acces = FALSE;
 }
 $node_path = drupal_lookup_path('alias','node/'.$row->nid);
 ?>
@@ -46,11 +46,11 @@ switch ($row->node_type) {
     $output .= '<div class="date-day">' . drupal_render($row->field_field_stanford_event_datetime_3[0]['rendered']) . '</div>';
     $output .= '</div>'; //end date-stacked
     $output .= '<div class="well">';
-    $output .= '<div>';
+    $output .= '<div>'; //undocumented div
     $output .= '<div class="type-event">Event</div>';
     $output .= '<div class="event-date-long descriptor">' . drupal_render($row->field_field_stanford_event_datetime[0]['rendered']) . ' ' . drupal_render($row->field_field_stanford_event_datetime_1[0]['rendered']) . '</div>';
     $output .= '<div class="event-title normal-link"><h3>' . $row->node_title . '</h3></div>';
-    $output .= '</div>';
+    $output .= '</div>'; //end undocumented div
     $output .= '</div>'; //end well
     $output .= '</div>';  //end postcard-left
     if ($node_acces) {
