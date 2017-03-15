@@ -23,6 +23,7 @@
  *
  * @ingroup views_templates
  */
+//dpm($row);
 global $user;
 $node = node_load($row->nid);
 if (node_access("update", $node, $user) === TRUE) {
@@ -74,19 +75,30 @@ switch ($row->node_type) {
     $output .= '</div>'; //end masonry-news
     break;
   case 'stanford_announcement':
-    $output = '<div class="masonry-announcement">';
-    if (isset($row->field_field_s_image_info[0])) {
-      $output .= '<div>' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '</div>';
+    if ($row->field_field_s_announce_tweet[0]['raw']['value'] == 1) {
+      //This is a tweet
+      $output = '<div class="masonry-tweet">';
+      $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
+      if ($node_acces) {
+        $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+      }
+      $output .= '</div>'; //end masonry-tweet
     }
-    $output .= '<div class="well">';
-    $output .= '<div class="descriptor">Announcement ' . drupal_render($row->field_field_s_announcement_date[0]['rendered']) . '</div>';
-    $output .= '<div class="normal-link"><h3>' . $row->node_title . '</h3></div>';
-    $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
-    $output .= '</div>'; //end well
-    if ($node_acces) {
-      $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+    else {
+      $output = '<div class="masonry-announcement">';
+      if (isset($row->field_field_s_image_info[0])) {
+        $output .= '<div>' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '</div>';
+      }
+      $output .= '<div class="well">';
+      $output .= '<div class="descriptor">Announcement ' . drupal_render($row->field_field_s_announcement_date[0]['rendered']) . '</div>';
+      $output .= '<div class="normal-link"><h3>' . $row->node_title . '</h3></div>';
+      $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
+      $output .= '</div>'; //end well
+      if ($node_acces) {
+        $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+      }
+      $output .= '</div>'; //end masonry-announcement
     }
-    $output .= '</div>'; //end masonry-announcement
     break;
   case 'stanford_funded_research':
     $output = '<div class="masonry-research">';
