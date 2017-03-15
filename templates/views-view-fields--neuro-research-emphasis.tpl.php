@@ -96,7 +96,6 @@ switch ($row->node_type) {
     $output .= '<div class="well">';
     $output .= '<div class="descriptor">Funded Research ' . drupal_render($row->field_field_s_fund_research_type[0]['rendered']) . '</div>';
     $output .= '<div class="normal-link"><h3>' . $row->node_title . '</h3></div>';
-    $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
     $output .= '</div>'; //end well
     if ($node_acces) {
       $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
