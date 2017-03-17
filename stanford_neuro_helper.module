@@ -12,3 +12,41 @@ function stanford_neuro_helper_views_api() {
     'template path' => drupal_get_path('module', 'stanford_neuro_helper') . '/templates',
   );
 }
+
+/**
+ * Implements hook_libraries_info().
+ */
+function stanford_neuro_helper_libraries_info() {
+  $libraries = array();
+  $libraries['isotope'] = array(
+    'name' => 'Isotope',
+    'vendor url' => 'http://isotope.metafizzy.co/',
+    'download url' => 'http://isotope.metafizzy.co/',
+    'version callback' => 'short_circuit_version',
+    'files' => array(
+      'js' => array(
+        'isotope.pkgd.min.js',
+      ),
+    ),
+  );
+ 
+  return $libraries;
+}
+
+/**
+* Short-circuit the version argument.
+*/
+function short_circuit_version() { 
+  return TRUE;
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function stanford_neuro_helper_preprocess_views_view(&$vars) {
+  if ($vars['view']->name == 'neuro_research_emphasis') {
+    libraries_load('isotope');
+    drupal_add_js(drupal_get_path('module', 'stanford_neuro_helper') .'/js/imagesloaded.pkgd.min.js', 'file');
+    drupal_add_js(drupal_get_path('module', 'stanford_neuro_helper') .'/js/emphasis_isotope.js', 'file');
+  }
+}
