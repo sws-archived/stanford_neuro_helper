@@ -23,7 +23,7 @@
             masonry: {
               // use element for option
               //columnWidth: 400,
-              gutter: 10
+              gutter: 20
             },
             //itemPositionDataEnabled: true
           });
