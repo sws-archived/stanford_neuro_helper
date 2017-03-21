@@ -12,7 +12,7 @@
             //columnWidth: 400,
             gutter: 20
           },
-          itemPositionDataEnabled: true
+          //itemPositionDataEnabled: true
         });
       });
       $( document ).ajaxComplete(function() {
