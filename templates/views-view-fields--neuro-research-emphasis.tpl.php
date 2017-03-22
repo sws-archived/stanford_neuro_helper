@@ -55,7 +55,7 @@ switch ($row->node_type) {
     $output .= '</div>'; //end well
     $output .= '</div>';  //end postcard-left
     if ($node_acces) {
-      $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+      $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
     }
     $output .= '</div>'; //end masonry-event
     break;
@@ -70,7 +70,7 @@ switch ($row->node_type) {
     $output .= '<div class="normal-link"><h3>' . $row->node_title . '</h3></div>';
     $output .= '</div>'; //end well
     if ($node_acces) {
-      $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+      $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
     }
     $output .= '</div>'; //end masonry-news
     break;
@@ -80,7 +80,7 @@ switch ($row->node_type) {
       $output = '<div class="masonry-tweet well">';
       $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
       if ($node_acces) {
-        $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+        $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
       }
       $output .= '</div>'; //end masonry-tweet
     }
@@ -95,7 +95,7 @@ switch ($row->node_type) {
       $output .= '<div>' . drupal_render($row->field_body[0]['rendered']) . '</div>';
       $output .= '</div>'; //end well
       if ($node_acces) {
-        $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+        $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
       }
       $output .= '</div>'; //end masonry-announcement
     }
@@ -110,7 +110,7 @@ switch ($row->node_type) {
     $output .= '<div class="normal-link"><h3>' . $row->node_title . '</h3></div>';
     $output .= '</div>'; //end well
     if ($node_acces) {
-      $output .= '<div class="edit-link"><a href="/node/' . $row->nid . '/edit?destination=' . $node_path . '">Edit</a></div>';
+      $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
     }
     $output .= '</div>'; //end masonry-research
 }
