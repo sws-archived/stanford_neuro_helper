@@ -3,8 +3,8 @@
     attach: function (context, settings) {
       // Code to be run on page load, and
       // on ajax load added here
-      $('.view-neuro-research-emphasis .view-content').imagesLoaded(function(){
-        $('.view-neuro-research-emphasis .view-content').isotope({
+      $('#content-body .view-neuro-research-emphasis .view-content').imagesLoaded(function(){
+        $('#content-body .view-neuro-research-emphasis .view-content').isotope({
           // options
           itemSelector: '.view-neuro-research-emphasis .views-row',
           masonry: {
@@ -16,8 +16,8 @@
         });
       });
       $( document ).ajaxComplete(function() {
-        $('.view-neuro-research-emphasis .view-content').imagesLoaded(function(){
-          $('.view-neuro-research-emphasis .view-content').isotope({
+        $('#content-body .view-neuro-research-emphasis .view-content').imagesLoaded(function(){
+          $('#content-body .view-neuro-research-emphasis .view-content').isotope({
             // options
             itemSelector: '.view-neuro-research-emphasis .views-row',
             masonry: {
