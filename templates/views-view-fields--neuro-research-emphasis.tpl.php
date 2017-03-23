@@ -47,7 +47,8 @@ switch ($row->node_type) {
     }
     $output .= '<div class="well">';
     $output .= '<div>'; //undocumented div
-    $output .= '<div class="event-date-long descriptor">Event - ' . drupal_render($row->field_field_stanford_event_datetime[0]['rendered']) . ' ' . drupal_render($row->field_field_stanford_event_datetime_1[0]['rendered']) . '</div>';
+    $output .= '<div class="type-event descriptor">Event</div>';
+    $output .= '<div class="event-date-long descriptor">' . drupal_render($row->field_field_stanford_event_datetime[0]['rendered']) . ' ' . drupal_render($row->field_field_stanford_event_datetime_1[0]['rendered']) . '</div>';
     $output .= '<div class="event-title normal-link"><h3><a href="' . $base_url . '/' . $node_path . '">' . $row->node_title . '</a></h3></div>';
     $output .= '</div>'; //end undocumented div
     if ($node_acces) {
