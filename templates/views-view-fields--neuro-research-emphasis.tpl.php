@@ -32,7 +32,6 @@ else {
   $node_acces = FALSE;
 }
 $node_path = drupal_lookup_path('alias','node/'.$row->nid);
-//dpm($node)
 ?>
 <?php
 switch ($row->node_type) {
@@ -48,7 +47,7 @@ switch ($row->node_type) {
     $output .= '<div class="well">';
     $output .= '<div>'; //undocumented div
     $output .= '<div class="event-date-long descriptor">Event - ' . drupal_render($row->field_field_stanford_event_datetime[0]['rendered']) . ' ' . drupal_render($row->field_field_stanford_event_datetime_1[0]['rendered']) . '</div>';
-    $output .= '<div class="event-title normal-link"><h3><a href="' . $node_path . '">' . $row->node_title . '</a></h3></div>';
+    $output .= '<div class="event-title normal-link"><h3><a href="/' . $node_path . '">' . $row->node_title . '</a></h3></div>';
     $output .= '</div>'; //end undocumented div
     if ($node_acces) {
       $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
@@ -60,12 +59,12 @@ switch ($row->node_type) {
     $output = '<div class="masonry-news">';
     if (isset($row->field_field_s_image_info[0])) {
       unset($row->field_field_s_image_info[0]['rendered']['entity']['field_collection_item'][$row->field_field_s_image_info[0]['raw']['value']]['field_s_image_caption']);
-      $output .= '<div><a href="' . $node_path . '">' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '</a></div>';
+      $output .= '<div><a href="/' . $node_path . '">' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '</a></div>';
     }
     $output .= '<div class="well">';
     $output .= '<div class="type-event descriptor">News - ' . drupal_render($row->field_field_s_news_date[0]['rendered'])  . '</div>';
     $output .= '<div class="descriptor">' . drupal_render($row->field_field_s_news_source[0]['rendered']) . '</div>';
-    $output .= '<div class="normal-link"><h3><a href="' . $node_path . '">' . $row->node_title . '</a></h3></div>';
+    $output .= '<div class="normal-link"><h3><a href="/' . $node_path . '">' . $row->node_title . '</a></h3></div>';
     if ($node_acces) {
       $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
     }
@@ -108,6 +107,7 @@ switch ($row->node_type) {
     $output .= '<div class="well">';
     $output .= '<div class="descriptor">Funded Research - ' . drupal_render($row->field_field_s_fund_research_type[0]['rendered']) . '</div>';
     $output .= '<div class="normal-link"><h3><a href="/' . $node_path . '">' . $row->node_title . '</a></h3></div>';
+    $output .= '<div class="abstract">' . $row->field_body_1[0]['rendered']['#markup'] . '</div>';
     if ($node_acces) {
       $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
     }
