@@ -61,8 +61,15 @@ function stanford_neuro_helper_feeds_after_save(FeedsSource $source, $entity, $i
 
   // Create new simplehtmldom object.
   $html = new simple_html_dom();
+
+  if (!isset($item['xpathparser:2'])) {
+    watchdog('stanford_neuro_helper', 'No description', array(), WATCHDOG_NOTICE);
+    watchdog('stanford_neuro_helper', 'item: %item', array("%item" => serialize($item)), WATCHDOG_NOTICE, 'link');
+    return;
+  }
+
   // Parse body field markup.
-  $html->load($item['description']);
+  $html->load($item['xpathparser:2']);
   // Find each image in the body markup.
   $imgs = $html->find('img');
 
@@ -111,7 +118,10 @@ function stanford_neuro_helper_feeds_after_save(FeedsSource $source, $entity, $i
       $destination = $uri . '/' . $filename;
       // Retrieve image.
       system_retrieve_file($img_url, $destination, TRUE, FILE_EXISTS_REPLACE);
-    }  // end if
+    }
+    else {
+      watchdog('stanford_neuro_helper', 'File DIR did not create: %uri', array("%uri" => $destination), WATCHDOG_NOTICE);
+    }
 
   }  // end foreach
 }  // end my_module_feeds_after_save
