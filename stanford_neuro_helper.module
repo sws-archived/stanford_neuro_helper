@@ -29,14 +29,14 @@ function stanford_neuro_helper_libraries_info() {
       ),
     ),
   );
- 
+
   return $libraries;
 }
 
 /**
 * Short-circuit the version argument.
 */
-function short_circuit_version() { 
+function short_circuit_version() {
   return TRUE;
 }
 
@@ -50,3 +50,78 @@ function stanford_neuro_helper_preprocess_views_view(&$vars) {
     drupal_add_js(drupal_get_path('module', 'stanford_neuro_helper') .'/js/emphasis_isotope.js', 'file');
   }
 }
+
+/**
+ * Implements hook_feeds_after_save().
+ * Inpsiration:
+ * http://www.radcampaign.com/blog/extending-drupal-feeds-import-inline-images
+ */
+function stanford_neuro_helper_feeds_after_save(FeedsSource $source, $entity, $item, $entity_id) {
+  include_once dirname(__FILE__) . "/includes/simple_html_dom.php";
+
+  // Create new simplehtmldom object.
+  $html = new simple_html_dom();
+
+  if (!isset($item['xpathparser:2'])) {
+    watchdog('stanford_neuro_helper', 'No description', array(), WATCHDOG_NOTICE);
+    watchdog('stanford_neuro_helper', 'item: %item', array("%item" => serialize($item)), WATCHDOG_NOTICE, 'link');
+    return;
+  }
+
+  // Parse body field markup.
+  $html->load($item['xpathparser:2']);
+  // Find each image in the body markup.
+  $imgs = $html->find('img');
+
+  foreach ($imgs as $img) {
+
+    $url_parts = parse_url($img->src);
+    // No host means the path is relative, i.e. the image is
+    // hosted locally.
+    $no_host = !isset($url_parts['host']);
+    // Somehow raw image data ended up in some of this content, we
+    // don’t want that.
+    $not_data = !(isset($url_parts['scheme']) && $url_parts['scheme'] == 'data');
+
+    // If the URL is absolute but doesn't match neuro, continue.
+    if (!$no_host) {
+      if ($url_parts['host'] !== "neuroscience.stanford.edu") {
+        continue;
+      }
+    }
+
+    // If the image is straight up data don't touch it.
+    if (!$not_data) {
+      continue;
+    }
+
+    $path = $url_parts['path'];
+    $path_parts = explode('/', $path);
+    // The leading slash results in an extra empty path element
+    // at the front of the array, lose it.
+    array_shift($path_parts);
+    // Decode encoded characters in the filename so the filename
+    // doesn't get double-encoded on save.
+    $filename = urldecode(array_pop($path_parts));
+    // Join the path back together and lop off the
+    // sites/default/files bit,leaving the directory under the
+    // public schema.
+    $filepath = str_replace('sites/default/files/', '', implode('/', $path_parts));
+    // The image we want is at the original full path under the
+    // domain we’re migrating from.
+    $img_url = 'https://neuroscience.stanford.edu' . $path;
+    // Build a stream wrapper for the destination directory.
+    $uri = file_build_uri($filepath);
+
+    // Ensure destination directory exists and is writeable.
+    if (file_prepare_directory($uri, FILE_CREATE_DIRECTORY)) {
+      $destination = $uri . '/' . $filename;
+      // Retrieve image.
+      system_retrieve_file($img_url, $destination, TRUE, FILE_EXISTS_REPLACE);
+    }
+    else {
+      watchdog('stanford_neuro_helper', 'File DIR did not create: %uri', array("%uri" => $destination), WATCHDOG_NOTICE);
+    }
+
+  }  // end foreach
+}  // end my_module_feeds_after_save
