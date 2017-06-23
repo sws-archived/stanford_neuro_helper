@@ -73,6 +73,21 @@ switch ($row->node_type) {
     $output .= '</div>'; //end well
     $output .= '</div>'; //end masonry-news
     break;
+  case 'stanford_video':
+    $output = '<div class="masonry-video">';
+    if (isset($row->field_field_s_image_info[0])) {
+      unset($row->field_field_s_image_info[0]['rendered']['entity']['field_collection_item'][$row->field_field_s_image_info[0]['raw']['value']]['field_s_image_caption']);
+      $output .= '<div><a href="' . $base_url . '/' . $node_path . '">' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '</a><div class="video-icon"><img src="' . $base_url . '/sites/default/files/default_images/video-icon.png" width="75" height="75"></div></div>';
+    }
+    $output .= '<div class="well">';
+    $output .= '<div class="type-event descriptor">Video</div>';
+    $output .= '<div class="normal-link"><h3><a href="' . $base_url . '/' . $node_path . '">' . $row->node_title . '</a></h3></div>';
+    if ($node_acces) {
+      $output .= '<div class="edit-link">' . l(t("Edit"), "node/" . $row->nid . '/edit', array("query" => array("destination" => $node_path))) . '</div>';
+    }
+    $output .= '</div>'; //end well
+    $output .= '</div>'; //end masonry-video
+    break;
   case 'stanford_announcement':
     if ($row->field_field_s_announce_tweet[0]['raw']['value'] == 1) {
       //This is a tweet
@@ -117,4 +132,5 @@ switch ($row->node_type) {
     $output .= '</div>'; //end masonry-research
 }
 print $output;
-?>
+
+
