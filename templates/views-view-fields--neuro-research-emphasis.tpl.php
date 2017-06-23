@@ -77,7 +77,7 @@ switch ($row->node_type) {
     $output = '<div class="masonry-video">';
     if (isset($row->field_field_s_image_info[0])) {
       unset($row->field_field_s_image_info[0]['rendered']['entity']['field_collection_item'][$row->field_field_s_image_info[0]['raw']['value']]['field_s_image_caption']);
-      $output .= '<div><a href="' . $base_url . '/' . $node_path . '">' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '</a><div class="video-icon"><img src="' . $base_url . '/sites/default/files/default_images/video-icon.png" width="75" height="75"></div></div>';
+      $output .= '<div><a href="' . $base_url . '/' . $node_path . '">' . drupal_render($row->field_field_s_image_info[0]['rendered']) . '<div class="video-icon"><img src="' . $base_url . '/sites/default/files/default_images/video-icon.png" width="75" height="75"></div></a></div>';
     }
     $output .= '<div class="well">';
     $output .= '<div class="type-event descriptor">Video</div>';
